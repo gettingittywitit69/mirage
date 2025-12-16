@@ -9,6 +9,17 @@ from typing import List
 import matplotlib
 
 matplotlib.use("Agg")
+matplotlib.rcParams.update(
+    {
+        "axes.titlesize": 13,
+        "axes.labelsize": 12,
+        "xtick.labelsize": 10,
+        "ytick.labelsize": 10,
+        "legend.fontsize": 10,
+        "axes.grid": True,
+        "grid.alpha": 0.3,
+    }
+)
 import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
@@ -102,6 +113,20 @@ def _ensure_calibration(mirage_map_path: Path, confusion_path: Path, seed: int) 
     return mirage_df, confusion_df
 
 
+def _select_config_id(results_df: pd.DataFrame, requested_id: int | None) -> int:
+    """Pick a baseline config id, defaulting to the top out-of-sample log-likelihood."""
+
+    for required in ("config_id", "test_loglik"):
+        if required not in results_df.columns:
+            raise ValueError(f"results dataframe missing required column '{required}'")
+    if requested_id is not None:
+        return requested_id
+    totals = results_df.groupby("config_id")["test_loglik"].sum()
+    if totals.empty:
+        raise ValueError("Unable to choose a baseline config_id from empty results.")
+    return int(totals.idxmax())
+
+
 def main(argv: List[str] | None = None) -> None:
     args = build_parser().parse_args(argv)
     args.figdir.mkdir(parents=True, exist_ok=True)
@@ -111,7 +136,8 @@ def main(argv: List[str] | None = None) -> None:
 
     # 1) Cumulative out-of-sample score
     fig, ax = plt.subplots(figsize=(7, 4))
-    plot_cumulative_scores(results_df, config_id=args.config_id, ax=ax)
+    cfg_id = _select_config_id(results_df, args.config_id)
+    plot_cumulative_scores(results_df, config_id=cfg_id, ax=ax)
     cum_path = args.figdir / "cumulative_scores.png"
     fig.tight_layout()
     fig.savefig(cum_path, dpi=150)
@@ -136,7 +162,6 @@ def main(argv: List[str] | None = None) -> None:
     # 4) Mirage heatmap (true n=0)
     mirage_fig = plot_mirage_heatmap(mirage_df)
     mirage_path = args.figdir / "mirage_heatmap.png"
-    mirage_fig.tight_layout()
     mirage_fig.savefig(mirage_path, dpi=150)
     plt.close(mirage_fig)
 
