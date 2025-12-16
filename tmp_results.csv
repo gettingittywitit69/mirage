@@ -1,0 +1,2 @@
+split_id,train_start,train_end,test_start,test_end,config_id,vol_filter,event_rule,q,u_fixed,u_used,model,test_loglik,n_proxy
+0,2000-01-01,2004-12-31,2005-01-01,2005-06-22,0,none,quantile,0.8,,1.2643512498200793,poisson_iid,-89.32192003112368,

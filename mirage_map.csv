@@ -1,0 +1,9 @@
+dgp,rho,persistence,T,model,n_proxy_mean,n_proxy_std,runs
+poisson_drift,0.0,0.6,300,hawkes_dt,0.0,,1
+poisson_drift,0.0,0.85,300,hawkes_dt,0.05510142759992443,,1
+poisson_drift,0.5,0.6,300,hawkes_dt,0.2399906944896131,,1
+poisson_drift,0.5,0.85,300,hawkes_dt,0.2531432691921097,,1
+rs_poisson,0.0,0.6,300,hawkes_dt,0.07210239827253619,,1
+rs_poisson,0.0,0.85,300,hawkes_dt,0.0,,1
+rs_poisson,0.5,0.6,300,hawkes_dt,0.0,,1
+rs_poisson,0.5,0.85,300,hawkes_dt,0.1960261372685064,,1

@@ -1,0 +1,4 @@
+config_id,vol_filter,event_rule,q,u_fixed,model,total_loglik,section,winner_model,wins,total_configs,win_rate
+0.0,none,quantile,0.8,,poisson_iid,-89.32192003112368,total_score,,,,
+0.0,none,quantile,0.8,,,-89.32192003112368,winner,poisson_iid,,,
+,,,,,,,robustness,poisson_iid,1.0,1.0,1.0

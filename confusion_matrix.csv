@@ -1,0 +1,4 @@
+dgp,model,wins,total_runs,win_rate
+poisson_drift,hawkes_dt,4,4,1.0
+rs_poisson,hawkes_dt,3,4,0.75
+rs_poisson,rs_poisson_dt,1,4,0.25
